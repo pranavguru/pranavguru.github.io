@@ -1,31 +1,65 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<title>Pranav Guruprasad</title>
-		<!-- link to main stylesheet -->
-		<link rel="stylesheet" type="text/css" href="/main.css">
-	</head>
-	<body>
-		<nav>
-    		<ul>
-        		<li><a href="/">Home</a></li>
-	        	<li><a href="/about">About</a></li>
-        		<li><a href="/cv">CV</a></li>
-        		<li><a href="/blog">Blog</a></li>
-    		</ul>
-		</nav>
-		<div class="container">
-    		<div class="blurb">
-        		<h1 style="font-family:helvetica"> Hi there, I'm Pranav!</h1>
-				<p style="font-family:helvetica"> Welcome to a small part of my world.</p>
-    		</div><!-- /.blurb -->
-		</div><!-- /.container -->
-		<footer>
-    	<ul>
-        	<li><a href="mailto:pranavguruprasad0@gmail.com">email</a></li>
-        	<li><a href="https://github.com/pranavguru">github.com/pranavguru</a></li>
-			</ul>
-		</footer>
-	</body>
-</html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Personal Website</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">My Website</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="#hero">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
+    <header id="hero" class="jumbotron text-center">
+        <div class="container">
+            <h1 class="display-4">Welcome to My Personal Website</h1>
+            <p class="lead">A showcase of my work and my passion for web development.</p>
+        </div>
+    </header>
+
+    <section id="about" class="container section-padding">
+        <h2 class="text-center">About Me</h2>
+        <p>This is a brief description about myself. I am a passionate web developer with experience in creating modern and responsive websites. I am skilled in HTML, CSS, JavaScript, and various web development frameworks.</p>
+    </section>
+
+    <section id="projects" class="container section-padding">
+        <h2 class="text-center">Projects</h2>
+        <div id="projects-container" class="row">
+            </div>
+    </section>
+
+    <section id="contact" class="container section-padding">
+        <h2 class="text-center">Contact Me</h2>
+        <p class="text-center">You can reach me on the following platforms:</p>
+        <div class="text-center">
+            <a href="#" class="btn btn-primary">GitHub</a>
+            <a href="#" class="btn btn-info">LinkedIn</a>
+            <a href="#" class="btn btn-secondary">Twitter</a>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white text-center p-3">
+        <p>&copy; 2025 My Personal Website</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

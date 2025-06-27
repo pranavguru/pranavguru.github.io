@@ -1,0 +1,11 @@
+body {
+    padding-top: 56px;
+}
+
+.section-padding {
+    padding: 60px 0;
+}
+
+#hero {
+    background-color: #f8f9fa;
+}
