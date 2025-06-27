@@ -3,63 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Personal Website</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <title>Your Name - Personal Site</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="#">My Website</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a class="nav-link" href="#hero">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <div class="container">
+        <header>
+            <img src="https://github.com/yourusername.png" alt="Profile Picture" class="profile-pic">
+            <h1>Your Name</h1>
+            <p class="bio">Software Developer | Writer | Speaker</p>
+        </header>
 
-    <header id="hero" class="jumbotron text-center">
-        <div class="container">
-            <h1 class="display-4">Welcome to My Personal Website</h1>
-            <p class="lead">A showcase of my work and my passion for web development.</p>
-        </div>
-    </header>
+        <section class="links">
+            <a href="#" class="link-card" target="_blank">
+                <i class="fas fa-briefcase"></i>
+                <span>Resume</span>
+            </a>
+            
+            <a href="https://github.com/yourusername" class="link-card" target="_blank">
+                <i class="fab fa-github"></i>
+                <span>GitHub</span>
+            </a>
+            
+            <a href="https://linkedin.com/in/yourusername" class="link-card" target="_blank">
+                <i class="fab fa-linkedin"></i>
+                <span>LinkedIn</span>
+            </a>
+            
+            <a href="https://twitter.com/yourusername" class="link-card" target="_blank">
+                <i class="fab fa-twitter"></i>
+                <span>Twitter</span>
+            </a>
+            
+            <a href="mailto:your.email@example.com" class="link-card">
+                <i class="fas fa-envelope"></i>
+                <span>Email</span>
+            </a>
+            
+            <a href="#" class="link-card" target="_blank">
+                <i class="fas fa-book"></i>
+                <span>Blog</span>
+            </a>
+            
+            <a href="#" class="link-card" target="_blank">
+                <i class="fas fa-project-diagram"></i>
+                <span>Projects</span>
+            </a>
+        </section>
 
-    <section id="about" class="container section-padding">
-        <h2 class="text-center">About Me</h2>
-        <p>This is a brief description about myself. I am a passionate web developer with experience in creating modern and responsive websites. I am skilled in HTML, CSS, JavaScript, and various web development frameworks.</p>
-    </section>
-
-    <section id="projects" class="container section-padding">
-        <h2 class="text-center">Projects</h2>
-        <div id="projects-container" class="row">
-            </div>
-    </section>
-
-    <section id="contact" class="container section-padding">
-        <h2 class="text-center">Contact Me</h2>
-        <p class="text-center">You can reach me on the following platforms:</p>
-        <div class="text-center">
-            <a href="#" class="btn btn-primary">GitHub</a>
-            <a href="#" class="btn btn-info">LinkedIn</a>
-            <a href="#" class="btn btn-secondary">Twitter</a>
-        </div>
-    </section>
-
-    <footer class="bg-dark text-white text-center p-3">
-        <p>&copy; 2025 My Personal Website</p>
-    </footer>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="js/script.js"></script>
+        <footer>
+            <p>© 2023 Your Name. All rights reserved.</p>
+        </footer>
+    </div>
 </body>
 </html>
