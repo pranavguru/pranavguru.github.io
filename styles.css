@@ -67,11 +67,6 @@ h1 {
     margin-bottom: 0.5rem;
 }
 
-.bio {
-    color: #6c757d;
-    font-size: 1rem;
-}
-
 .navbar {
     display: flex;
     flex-direction: column;
@@ -132,6 +127,12 @@ h1 {
     margin-left: var(--sidebar-width);
     padding: 2rem;
     width: calc(100% - var(--sidebar-width));
+}
+
+#about-intro .bio {
+    color: #6c757d;
+    font-size: 1.1rem;
+    margin-top: 1rem;
 }
 
 #news ul {
