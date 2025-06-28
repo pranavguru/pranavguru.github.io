@@ -1,6 +1,0 @@
-title: Pranav Guruprasad
-logo: "WhatsApp Image 2021-05-31 at 12.21.14 PM.jpeg"
-markdown: kramdown
-permalink: /blog/:year/:month/:day/:title
-
-theme: jekyll-theme-cayman
