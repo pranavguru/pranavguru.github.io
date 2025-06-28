@@ -9,52 +9,45 @@
 </head>
 <body>
     <div class="container">
-        <header>
-            <img src="https://github.com/yourusername.png" alt="Profile Picture" class="profile-pic">
-            <h1>Your Name</h1>
-            <p class="bio">Software Developer | Writer | Speaker</p>
-        </header>
-
-        <section class="links">
-            <a href="#" class="link-card" target="_blank">
-                <i class="fas fa-briefcase"></i>
-                <span>Resume</span>
-            </a>
-            
-            <a href="https://github.com/yourusername" class="link-card" target="_blank">
-                <i class="fab fa-github"></i>
-                <span>GitHub</span>
-            </a>
-            
-            <a href="https://linkedin.com/in/yourusername" class="link-card" target="_blank">
-                <i class="fab fa-linkedin"></i>
-                <span>LinkedIn</span>
-            </a>
-            
-            <a href="https://twitter.com/yourusername" class="link-card" target="_blank">
-                <i class="fab fa-twitter"></i>
-                <span>Twitter</span>
-            </a>
-            
-            <a href="mailto:your.email@example.com" class="link-card">
-                <i class="fas fa-envelope"></i>
-                <span>Email</span>
-            </a>
-            
-            <a href="#" class="link-card" target="_blank">
-                <i class="fas fa-book"></i>
-                <span>Blog</span>
-            </a>
-            
-            <a href="#" class="link-card" target="_blank">
-                <i class="fas fa-project-diagram"></i>
-                <span>Projects</span>
-            </a>
-        </section>
-
-        <footer>
-            <p>© 2023 Your Name. All rights reserved.</p>
-        </footer>
+        <aside class="sidebar">
+            <div class="profile">
+                <img src="https://github.com/yourusername.png" alt="Profile Picture" class="profile-pic">
+                <h1>Your Name</h1>
+                <p class="bio">Software Developer | Writer | Speaker</p>
+            </div>
+            <nav class="navbar">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="projects.html" class="nav-link">Projects</a>
+                <a href="publications.html" class="nav-link">Publications</a>
+            </nav>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="mailto:your.email@example.com"><i class="fas fa-envelope"></i></a>
+            </div>
+            <button id="dark-mode-toggle" class="dark-mode-toggle">
+                <i class="fas fa-sun"></i>
+                <i class="fas fa-moon"></i>
+            </button>
+        </aside>
+        <main class="main-content">
+            <section id="news">
+                <h2>News</h2>
+                <ul>
+                    <li>
+                        <span class="date">May 2023</span>
+                        <p>Started my Ph.D. at Georgia Tech.</p>
+                    </li>
+                    <li>
+                        <span class="date">May 2021</span>
+                        <p>Presented my paper at JSSPP (IPDPS '21).</p>
+                    </li>
+                </ul>
+            </section>
+        </main>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>
