@@ -5,9 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Check for saved theme preference or default to dark mode
     const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     
-    // Set initial theme
+    // Set initial theme - default to dark mode
     if (savedTheme) {
         if (savedTheme === 'light') {
             html.classList.add('light-mode');
@@ -16,9 +15,10 @@ document.addEventListener('DOMContentLoaded', function() {
             html.classList.remove('light-mode');
             themeIcon.className = 'fas fa-sun';
         }
-    } else if (!prefersDark) {
-        html.classList.add('light-mode');
-        themeIcon.className = 'fas fa-moon';
+    } else {
+        // Default to dark mode
+        html.classList.remove('light-mode');
+        themeIcon.className = 'fas fa-sun';
     }
     
     // Toggle theme function
