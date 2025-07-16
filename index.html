@@ -1,56 +1,44 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Name - Personal Site</title>
+    <title>Pranav Guru</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <aside class="sidebar">
-            <div class="profile">
-                <img src="https://github.com/yourusername.png" alt="Profile Picture" class="profile-pic">
-                <h1>Your Name</h1>
+        <header>
+            <div class="header-top">
+                <h1>Pranav Guruprasad</h1>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <i class="fas fa-sun"></i>
+                </button>
             </div>
-            <nav class="navbar">
-                <a href="index.html" class="nav-link active">Home</a>
-                <a href="about.html" class="nav-link">About</a>
-                <a href="projects.html" class="nav-link">Projects</a>
-                <a href="publications.html" class="nav-link">Publications</a>
-            </nav>
-            <div class="social-links">
-                <a href="mailto:your.email@example.com" title="Email"><i class="fas fa-envelope"></i></a>
-                <a href="#" title="CV"><i class="fas fa-file-alt"></i></a>
-                <a href="https://github.com/yourusername" title="GitHub"><i class="fab fa-github"></i></a>
-                <a href="https://linkedin.com/in/yourusername" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-            </div>
-            <button id="dark-mode-toggle" class="dark-mode-toggle">
-                <i class="fas fa-sun"></i>
-                <i class="fas fa-moon"></i>
-            </button>
-        </aside>
-        <main class="main-content">
-            <section id="about-intro">
-                <p>I am a passionate software developer with a strong interest in creating innovative solutions. My expertise lies in web development, and I am always eager to learn new technologies and expand my skillset. I have experience working on various projects, from small personal websites to large-scale applications.</p>
-                 <p class="bio">Software Developer | Writer | Speaker</p>
-            </section>
-            <section id="news">
-                <h2>News</h2>
+            <p>I am a researcher and engineer interested in the intersection of multimodal understanding and action taking capabilities of AI systems.</p>
+        </header>
+        <main>
+            <p>I am currently building <a href="https://metarch.ai">metarch</a> to build a new class of foundation models and AI systems that can take actions over long horizons in the software world. I studied computer science, specifically machine learning at Georgia Tech and BITS Goa. I made early contributions to <a href="https://www.app.got-it.ai/">got-it-ai</a>, the world's first fully autonomous conversational AI platform. I briefly worked in defense tech on multimodal systems to safeguard personnel. I have also worked on translation at IBM Watson ML.</p>
+            
+            <section id="publications">
+                <h2>Selected Publications</h2>
                 <ul>
-                    <li>
-                        <span class="date">May 2023</span>
-                        <p>Started my Ph.D. at Georgia Tech.</p>
-                    </li>
-                    <li>
-                        <span class="date">May 2021</span>
-                        <p>Presented my paper at JSSPP (IPDPS '21).</p>
-                    </li>
+                    <li><a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=vrtIqhEAAAAJ&citation_for_view=vrtIqhEAAAAJ:zYLM7Y9cAGgC">An Open-Source Software Toolkit & Benchmark Suite for the Evaluation and Adaptation of Multimodal Action Models</a></li>
+                    <li><a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=vrtIqhEAAAAJ&citation_for_view=vrtIqhEAAAAJ:qjMakFHDy7sC">Benchmarking Vision, Language, & Action Models in Procedurally Generated, Open Ended Action Environments</a></li>
+                    <li><a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=vrtIqhEAAAAJ&citation_for_view=vrtIqhEAAAAJ:IjCSPb-OGe4C">KULCQ: An Unsupervised Keyword-based Utterance Level Clustering Quality Metric</a></li>
+                    <li><a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=vrtIqhEAAAAJ&citation_for_view=vrtIqhEAAAAJ:2osOgNQ5qMEC">Jill watson: A virtual teaching assistant powered by chatgpt</a></li>
+                    <li><a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=vrtIqhEAAAAJ&citation_for_view=vrtIqhEAAAAJ:d1gkVwhDpl0C">An end-to-end, interactive deep learning based annotation system for cursive and print English handwritten text</a></li>
                 </ul>
             </section>
+
+            <div class="social-links">
+                <a href="https://x.com/pranavguru13" title="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://scholar.google.com/citations?user=vrtIqhEAAAAJ&hl=en" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+            </div>
         </main>
     </div>
-    <script src="script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
