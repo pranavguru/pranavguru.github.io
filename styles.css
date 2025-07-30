@@ -136,6 +136,16 @@ main a:hover {
     color: var(--text-accent);
 }
 
+#about h2 {
+    font-size: 1.8em;
+    font-weight: 600;
+    margin-top: 2.5em;
+    margin-bottom: 1em;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.5em;
+    color: var(--text-accent);
+}
+
 #publications ul {
     list-style: none;
     padding: 0;
