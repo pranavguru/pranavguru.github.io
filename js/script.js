@@ -1,54 +1,52 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const themeToggle = document.getElementById('theme-toggle');
-    const themeIcon = themeToggle.querySelector('i');
-    const html = document.documentElement;
-    
-    // Check for saved theme preference or default to dark mode
-    const savedTheme = localStorage.getItem('theme');
-    
-    // Set initial theme - default to dark mode
-    if (savedTheme) {
-        if (savedTheme === 'light') {
-            html.classList.add('light-mode');
-            themeIcon.className = 'fas fa-moon';
-        } else {
-            html.classList.remove('light-mode');
-            themeIcon.className = 'fas fa-sun';
-        }
-    } else {
-        // Default to dark mode
-        html.classList.remove('light-mode');
-        themeIcon.className = 'fas fa-sun';
-    }
-    
-    // Toggle theme function
-    function toggleTheme() {
-        const isLightMode = html.classList.contains('light-mode');
-        
-        if (isLightMode) {
-            html.classList.remove('light-mode');
-            themeIcon.className = 'fas fa-sun';
-            localStorage.setItem('theme', 'dark');
-        } else {
-            html.classList.add('light-mode');
-            themeIcon.className = 'fas fa-moon';
-            localStorage.setItem('theme', 'light');
-        }
-    }
-    
-    // Add click event listener
-    themeToggle.addEventListener('click', toggleTheme);
-    
-    // Listen for system theme changes
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
-        if (!localStorage.getItem('theme')) {
-            if (e.matches) {
-                html.classList.remove('light-mode');
-                themeIcon.className = 'fas fa-sun';
-            } else {
-                html.classList.add('light-mode');
-                themeIcon.className = 'fas fa-moon';
+document.addEventListener('DOMContentLoaded', function () {
+    const noteItems = document.querySelectorAll('.note-item');
+    const notes = document.querySelectorAll('.note');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    const content = document.querySelector('.content');
+
+    // Note switching
+    noteItems.forEach(function (item) {
+        item.addEventListener('click', function () {
+            var noteId = item.getAttribute('data-note');
+
+            // Update active state in sidebar
+            noteItems.forEach(function (n) { n.classList.remove('active'); });
+            item.classList.add('active');
+
+            // Show the selected note
+            notes.forEach(function (note) { note.classList.add('hidden'); });
+            var target = document.getElementById('note-' + noteId);
+            if (target) {
+                target.classList.remove('hidden');
+                // Re-trigger animation
+                target.style.animation = 'none';
+                target.offsetHeight; // force reflow
+                target.style.animation = '';
             }
+
+            // Close sidebar on mobile
+            if (window.innerWidth <= 768) {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('show');
+            }
+
+            // Scroll content to top
+            content.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+
+    // Mobile sidebar toggle
+    content.addEventListener('click', function (e) {
+        // Only trigger from the hamburger pseudo-element area
+        if (window.innerWidth <= 768 && e.clientY < 60 && e.clientX < 60) {
+            sidebar.classList.add('open');
+            overlay.classList.add('show');
         }
+    });
+
+    overlay.addEventListener('click', function () {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('show');
     });
 });
