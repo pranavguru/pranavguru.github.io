@@ -1,7 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const noteItems = document.querySelectorAll('.note-item');
-    const notes = document.querySelectorAll('.note');
-    const noteGroups = document.querySelectorAll('.note-group');
+    const root = document.documentElement;
+    const desktop = document.getElementById('desktop');
+    const noteItems = Array.from(document.querySelectorAll('.note-item'));
+    const notes = Array.from(document.querySelectorAll('.note'));
+    const noteGroups = Array.from(document.querySelectorAll('.note-group'));
     const sidebar = document.querySelector('.sidebar');
     const overlay = document.getElementById('sidebar-overlay');
     const content = document.querySelector('.content');
@@ -9,89 +11,94 @@ document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.getElementById('search-input');
     const searchClear = document.getElementById('search-clear');
     const searchEmpty = document.getElementById('search-empty');
+    const spotlight = document.getElementById('spotlight');
+    const spotlightInput = document.getElementById('spotlight-input');
+    const spotlightResults = document.getElementById('spotlight-results');
+    const toast = document.getElementById('toast');
+    const menuClock = document.getElementById('menu-clock');
+    const themeNames = ['sonoma', 'daybreak', 'midnight'];
+    const THEME_KEY = 'pg-theme';
 
-    // Build a search index from each note item + the body of its matching article
-    const searchIndex = Array.from(noteItems).map(function (item) {
-        const titleEl = item.querySelector('.note-item-title');
-        const metaEl = item.querySelector('.note-item-meta');
-        const dateEl = metaEl ? metaEl.querySelector('.note-item-date') : null;
+    let frontZ = 40;
+    let toastTimer = null;
+    let selectedSpotlightIndex = 0;
 
-        const noteId = item.getAttribute('data-note');
-        const article = document.getElementById('note-' + noteId);
-        const bodyText = article ? article.textContent.replace(/\s+/g, ' ').trim() : '';
-
-        // metaPreview = the meta text without the date prefix
-        const metaPreview = (metaEl ? metaEl.textContent : '')
-            .replace(dateEl ? dateEl.textContent : '', '')
-            .trim();
-
-        return {
-            item: item,
-            titleEl: titleEl,
-            metaEl: metaEl,
-            dateText: dateEl ? dateEl.textContent : '',
-            originalTitle: titleEl ? titleEl.textContent : '',
-            originalMetaPreview: metaPreview,
-            haystack: ((titleEl ? titleEl.textContent : '') + ' ' +
-                       metaPreview + ' ' +
-                       bodyText).toLowerCase()
-        };
-    });
-
-    // Note switching
-    noteItems.forEach(function (item) {
-        item.addEventListener('click', function () {
-            var noteId = item.getAttribute('data-note');
-
-            // Update active state in sidebar
-            noteItems.forEach(function (n) { n.classList.remove('active'); });
-            item.classList.add('active');
-
-            // Show the selected note
-            notes.forEach(function (note) { note.classList.add('hidden'); });
-            var target = document.getElementById('note-' + noteId);
-            if (target) {
-                target.classList.remove('hidden');
-                // Re-trigger animation
-                target.style.animation = 'none';
-                target.offsetHeight; // force reflow
-                target.style.animation = '';
-            }
-
-            // Close sidebar on mobile
-            if (window.innerWidth <= 768) {
-                sidebar.classList.remove('open');
-                overlay.classList.remove('show');
-            }
-
-            // Scroll content to top
-            content.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    });
-
-    // ===== Search =====
     function escapeHtml(str) {
-        return str.replace(/[&<>"']/g, function (c) {
+        return String(str).replace(/[&<>"']/g, function (c) {
             return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c];
         });
     }
 
+    function showToast(message) {
+        if (!toast) return;
+        toast.textContent = message;
+        toast.classList.add('show');
+        if (toastTimer) clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+            toast.classList.remove('show');
+        }, 2600);
+    }
+
+    function cleanTitle(text) {
+        return text.replace(/\s+/g, ' ').trim();
+    }
+
+    noteItems.forEach(function (item) {
+        const noteId = item.getAttribute('data-note');
+        const article = document.getElementById('note-' + noteId);
+        if (!article) return;
+
+        const lead = article.querySelector('.note-lead');
+        const firstLi = article.querySelector('ul li');
+        const source = cleanTitle((lead && lead.textContent) || (firstLi && firstLi.textContent) || '');
+        const meta = item.querySelector('.note-item-meta');
+        const dateEl = meta ? meta.querySelector('.note-item-date') : null;
+        if (!source || !meta || !dateEl) return;
+
+        const preview = source.length > 48 ? source.slice(0, 48).trim() + '...' : source;
+        meta.innerHTML = '<span class="note-item-date">' + escapeHtml(dateEl.textContent) + '</span> ' + escapeHtml(preview);
+    });
+
+    const searchIndex = noteItems.map(function (item) {
+        const noteId = item.getAttribute('data-note');
+        const article = document.getElementById('note-' + noteId);
+        const titleEl = item.querySelector('.note-item-title');
+        const metaEl = item.querySelector('.note-item-meta');
+        const dateEl = metaEl ? metaEl.querySelector('.note-item-date') : null;
+        const title = cleanTitle(titleEl ? titleEl.textContent : '');
+        const meta = cleanTitle((metaEl ? metaEl.textContent : '').replace(dateEl ? dateEl.textContent : '', ''));
+        const body = cleanTitle(article ? article.textContent : '');
+        const emoji = title.slice(0, 2).trim();
+
+        return {
+            id: noteId,
+            item: item,
+            titleEl: titleEl,
+            metaEl: metaEl,
+            dateText: dateEl ? dateEl.textContent : '',
+            title: title,
+            meta: meta,
+            emoji: emoji || '📝',
+            haystack: (title + ' ' + meta + ' ' + body).toLowerCase()
+        };
+    });
+
     function highlight(text, query) {
         if (!query) return escapeHtml(text);
         const lower = text.toLowerCase();
-        let out = '';
-        let i = 0;
-        while (i < text.length) {
-            const idx = lower.indexOf(query, i);
-            if (idx === -1) {
-                out += escapeHtml(text.slice(i));
+        let output = '';
+        let index = 0;
+        while (index < text.length) {
+            const match = lower.indexOf(query, index);
+            if (match === -1) {
+                output += escapeHtml(text.slice(index));
                 break;
             }
-            out += escapeHtml(text.slice(i, idx));
-            out += '<mark>' + escapeHtml(text.slice(idx, idx + query.length)) + '</mark>';
-            i = idx + query.length;
+            output += escapeHtml(text.slice(index, match));
+            output += '<mark>' + escapeHtml(text.slice(match, match + query.length)) + '</mark>';
+            index = match + query.length;
         }
-        return out;
+        return output;
     }
 
     function applySearch(rawQuery) {
@@ -103,71 +110,365 @@ document.addEventListener('DOMContentLoaded', function () {
             entry.item.classList.toggle('is-hidden', !matches);
             if (matches) matchCount++;
 
-            // Restore or update title/meta with optional highlight
-            if (entry.titleEl) {
-                entry.titleEl.innerHTML = highlight(entry.originalTitle, query);
-            }
+            if (entry.titleEl) entry.titleEl.innerHTML = highlight(entry.title, query);
             if (entry.metaEl) {
                 entry.metaEl.innerHTML =
-                    '<span class="note-item-date">' + escapeHtml(entry.dateText) + '</span>' +
-                    highlight(entry.originalMetaPreview, query);
+                    '<span class="note-item-date">' + escapeHtml(entry.dateText) + '</span> ' +
+                    highlight(entry.meta, query);
             }
         });
 
-        // Hide group labels that have no visible items
         noteGroups.forEach(function (group) {
             const visible = group.querySelectorAll('.note-item:not(.is-hidden)').length;
             group.classList.toggle('is-hidden', visible === 0);
         });
 
-        searchBar.classList.toggle('has-value', rawQuery.length > 0);
-        searchEmpty.hidden = matchCount > 0 || !query;
+        if (searchBar) searchBar.classList.toggle('has-value', rawQuery.length > 0);
+        if (searchEmpty) searchEmpty.hidden = matchCount > 0 || !query;
     }
+
+    function bringToFront(win) {
+        if (!win) return;
+        frontZ += 1;
+        win.style.zIndex = String(frontZ);
+        document.querySelectorAll('.app-window').forEach(function (other) {
+            other.classList.toggle('is-front', other === win);
+        });
+    }
+
+    function syncDock() {
+        document.querySelectorAll('.dock-icon[data-open-window]').forEach(function (icon) {
+            const id = icon.getAttribute('data-open-window');
+            const win = document.querySelector('[data-window="' + id + '"]');
+            const active = win && !win.hidden && !win.classList.contains('is-minimizing');
+            icon.classList.toggle('is-active', Boolean(active));
+            icon.classList.toggle('is-minimized', Boolean(win && win.hidden));
+        });
+    }
+
+    function openWindow(id) {
+        const win = document.querySelector('[data-window="' + id + '"]');
+        if (!win) return;
+        window.scrollTo(0, 0);
+        win.hidden = false;
+        win.classList.remove('is-minimizing');
+        bringToFront(win);
+        syncDock();
+    }
+
+    function minimizeWindow(win) {
+        if (!win) return;
+        win.classList.add('is-minimizing');
+        setTimeout(function () {
+            win.hidden = true;
+            win.classList.remove('is-minimizing');
+            syncDock();
+        }, 230);
+    }
+
+    function closeWindow(win) {
+        if (!win) return;
+        const id = win.getAttribute('data-window');
+        win.hidden = true;
+        win.classList.remove('is-zoomed');
+        syncDock();
+        if (id === 'notes') showToast('Notes closed. Reopen it from the dock.');
+    }
+
+    function openNote(noteId) {
+        openWindow('notes');
+
+        noteItems.forEach(function (item) {
+            item.classList.toggle('active', item.getAttribute('data-note') === noteId);
+        });
+
+        notes.forEach(function (note) {
+            const active = note.id === 'note-' + noteId;
+            note.classList.toggle('hidden', !active);
+            if (active) {
+                note.style.animation = 'none';
+                note.offsetHeight;
+                note.style.animation = '';
+            }
+        });
+
+        if (content) content.scrollTo({ top: 0, behavior: 'smooth' });
+        if (window.innerWidth <= 700) {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('show');
+        }
+    }
+
+    noteItems.forEach(function (item) {
+        item.addEventListener('click', function () {
+            openNote(item.getAttribute('data-note'));
+        });
+    });
 
     if (searchInput) {
         searchInput.addEventListener('input', function () {
             applySearch(searchInput.value);
         });
 
-        searchInput.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape') {
+        searchInput.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
                 searchInput.value = '';
                 applySearch('');
                 searchInput.blur();
-            } else if (e.key === 'Enter') {
-                // Open the first visible match
+            }
+            if (event.key === 'Enter') {
                 const firstMatch = document.querySelector('.note-item:not(.is-hidden)');
                 if (firstMatch) firstMatch.click();
             }
         });
+    }
 
+    if (searchClear) {
         searchClear.addEventListener('click', function () {
             searchInput.value = '';
             applySearch('');
             searchInput.focus();
         });
+    }
 
-        // Cmd/Ctrl + K focuses search
-        document.addEventListener('keydown', function (e) {
-            if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-                e.preventDefault();
-                searchInput.focus();
-                searchInput.select();
+    document.querySelectorAll('[data-open-note]').forEach(function (button) {
+        button.addEventListener('click', function () {
+            openNote(button.getAttribute('data-open-note'));
+        });
+    });
+
+    document.querySelectorAll('[data-open-window]').forEach(function (button) {
+        button.addEventListener('click', function () {
+            openWindow(button.getAttribute('data-open-window'));
+        });
+    });
+
+    document.querySelectorAll('.dock-icon:not([data-open-window]):not([data-toggle-theme])').forEach(function (button) {
+        button.addEventListener('click', function () {
+            button.classList.remove('is-bouncing');
+            button.offsetHeight;
+            button.classList.add('is-bouncing');
+            setTimeout(function () {
+                button.classList.remove('is-bouncing');
+            }, 520);
+        });
+    });
+
+    document.querySelectorAll('[data-window-action]').forEach(function (button) {
+        button.addEventListener('click', function (event) {
+            event.stopPropagation();
+            const win = button.closest('.app-window');
+            const action = button.getAttribute('data-window-action');
+            if (action === 'close') closeWindow(win);
+            if (action === 'minimize') minimizeWindow(win);
+            if (action === 'zoom') {
+                win.classList.toggle('is-zoomed');
+                bringToFront(win);
+            }
+        });
+    });
+
+    document.querySelectorAll('.app-window').forEach(function (win) {
+        win.addEventListener('pointerdown', function () {
+            bringToFront(win);
+        });
+    });
+
+    function getSpotlightMatches(query) {
+        const normalized = query.trim().toLowerCase();
+        const matches = searchIndex.filter(function (entry) {
+            return !normalized || entry.haystack.indexOf(normalized) !== -1;
+        });
+        return matches.slice(0, 6);
+    }
+
+    function renderSpotlight() {
+        const matches = getSpotlightMatches(spotlightInput.value);
+        selectedSpotlightIndex = Math.min(selectedSpotlightIndex, Math.max(matches.length - 1, 0));
+
+        if (!matches.length) {
+            spotlightResults.innerHTML = '<div class="spotlight-result" aria-disabled="true"><span class="spotlight-result-icon">∅</span><span><span class="spotlight-result-title">No notes found</span><span class="spotlight-result-meta">Try about, links, reading, publications, music, or principles.</span></span></div>';
+            return;
+        }
+
+        spotlightResults.innerHTML = matches.map(function (entry, index) {
+            return '<button class="spotlight-result' + (index === selectedSpotlightIndex ? ' is-selected' : '') + '" type="button" data-spotlight-note="' + escapeHtml(entry.id) + '">' +
+                '<span class="spotlight-result-icon">' + escapeHtml(entry.emoji) + '</span>' +
+                '<span><span class="spotlight-result-title">' + escapeHtml(entry.title) + '</span>' +
+                '<span class="spotlight-result-meta">' + escapeHtml(entry.meta || 'Open in Notes') + '</span></span>' +
+                '</button>';
+        }).join('');
+    }
+
+    function openSpotlight() {
+        spotlight.hidden = false;
+        selectedSpotlightIndex = 0;
+        spotlightInput.value = '';
+        renderSpotlight();
+        requestAnimationFrame(function () {
+            spotlightInput.focus();
+        });
+    }
+
+    function closeSpotlight() {
+        spotlight.hidden = true;
+    }
+
+    function chooseSpotlightResult() {
+        const matches = getSpotlightMatches(spotlightInput.value);
+        const chosen = matches[selectedSpotlightIndex];
+        if (!chosen) return;
+        closeSpotlight();
+        openNote(chosen.id);
+    }
+
+    document.querySelectorAll('[data-open-spotlight]').forEach(function (button) {
+        button.addEventListener('click', openSpotlight);
+    });
+
+    if (spotlightInput) {
+        spotlightInput.addEventListener('input', function () {
+            selectedSpotlightIndex = 0;
+            renderSpotlight();
+        });
+
+        spotlightInput.addEventListener('keydown', function (event) {
+            const matches = getSpotlightMatches(spotlightInput.value);
+            if (event.key === 'Escape') closeSpotlight();
+            if (event.key === 'ArrowDown') {
+                event.preventDefault();
+                selectedSpotlightIndex = Math.min(selectedSpotlightIndex + 1, Math.max(matches.length - 1, 0));
+                renderSpotlight();
+            }
+            if (event.key === 'ArrowUp') {
+                event.preventDefault();
+                selectedSpotlightIndex = Math.max(selectedSpotlightIndex - 1, 0);
+                renderSpotlight();
+            }
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                chooseSpotlightResult();
             }
         });
     }
 
-    // Mobile sidebar toggle
-    content.addEventListener('click', function (e) {
-        // Only trigger from the hamburger pseudo-element area
-        if (window.innerWidth <= 768 && e.clientY < 60 && e.clientX < 60) {
-            sidebar.classList.add('open');
-            overlay.classList.add('show');
+    if (spotlightResults) {
+        spotlightResults.addEventListener('click', function (event) {
+            const result = event.target.closest('[data-spotlight-note]');
+            if (!result) return;
+            closeSpotlight();
+            openNote(result.getAttribute('data-spotlight-note'));
+        });
+    }
+
+    if (spotlight) {
+        spotlight.addEventListener('click', function (event) {
+            if (event.target === spotlight) closeSpotlight();
+        });
+    }
+
+    document.addEventListener('keydown', function (event) {
+        if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+            event.preventDefault();
+            openSpotlight();
         }
+        if (event.key === 'Escape' && !spotlight.hidden) closeSpotlight();
     });
 
-    overlay.addEventListener('click', function () {
-        sidebar.classList.remove('open');
-        overlay.classList.remove('show');
+    function makeDraggable(win) {
+        const handle = win.querySelector('[data-drag-handle]');
+        if (!handle) return;
+
+        handle.addEventListener('pointerdown', function (event) {
+            if (event.target.closest('button, a')) return;
+            if (win.classList.contains('is-zoomed')) return;
+
+            bringToFront(win);
+            const rect = win.getBoundingClientRect();
+            const offsetX = event.clientX - rect.left;
+            const offsetY = event.clientY - rect.top;
+
+            handle.setPointerCapture(event.pointerId);
+
+            function move(pointerEvent) {
+                const maxLeft = window.innerWidth - 90;
+                const maxTop = window.innerHeight - 120;
+                const left = Math.min(Math.max(pointerEvent.clientX - offsetX, 8), maxLeft);
+                const top = Math.min(Math.max(pointerEvent.clientY - offsetY, 38), maxTop);
+                win.style.left = left + 'px';
+                win.style.top = top + 'px';
+            }
+
+            function stop(pointerEvent) {
+                handle.releasePointerCapture(pointerEvent.pointerId);
+                handle.removeEventListener('pointermove', move);
+                handle.removeEventListener('pointerup', stop);
+                handle.removeEventListener('pointercancel', stop);
+            }
+
+            handle.addEventListener('pointermove', move);
+            handle.addEventListener('pointerup', stop);
+            handle.addEventListener('pointercancel', stop);
+        });
+    }
+
+    document.querySelectorAll('.app-window').forEach(makeDraggable);
+
+    const mobileToggle = document.querySelector('.mobile-sidebar-toggle');
+    if (mobileToggle) {
+        mobileToggle.addEventListener('click', function () {
+            sidebar.classList.add('open');
+            overlay.classList.add('show');
+        });
+    }
+
+    if (overlay) {
+        overlay.addEventListener('click', function () {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('show');
+        });
+    }
+
+    function applyTheme(theme) {
+        const next = themeNames.indexOf(theme) === -1 ? 'sonoma' : theme;
+        root.setAttribute('data-theme', next);
+        try { localStorage.setItem(THEME_KEY, next); } catch (error) { /* ignore storage failures */ }
+    }
+
+    function cycleTheme() {
+        const current = root.getAttribute('data-theme') || 'sonoma';
+        const next = themeNames[(themeNames.indexOf(current) + 1) % themeNames.length] || 'sonoma';
+        applyTheme(next);
+        showToast('Wallpaper switched to ' + next + '.');
+    }
+
+    document.querySelectorAll('[data-toggle-theme]').forEach(function (button) {
+        button.addEventListener('click', cycleTheme);
     });
+
+    try {
+        applyTheme(localStorage.getItem(THEME_KEY) || root.getAttribute('data-theme') || 'sonoma');
+    } catch (error) {
+        applyTheme('sonoma');
+    }
+
+    function updateClock() {
+        if (!menuClock) return;
+        const now = new Date();
+        const date = now.toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' });
+        const time = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+        menuClock.textContent = date + ' ' + time;
+        menuClock.dateTime = now.toISOString();
+    }
+
+    updateClock();
+    setInterval(updateClock, 15000);
+
+    desktop.addEventListener('dblclick', function (event) {
+        if (event.target !== desktop && !event.target.classList.contains('wallpaper-grain')) return;
+        openSpotlight();
+    });
+
+    openWindow('notes');
+    syncDock();
 });
