@@ -19,8 +19,8 @@
     --window-bg: rgba(250, 250, 252, 0.78);
     --window-border: rgba(255, 255, 255, 0.62);
     --window-shadow: 0 26px 70px rgba(16, 24, 40, 0.26), 0 4px 20px rgba(16, 24, 40, 0.16);
-    --sidebar-bg: rgba(242, 240, 235, 0.62);
-    --content-bg: rgba(255, 252, 246, 0.78);
+    --sidebar-bg: rgba(245, 244, 241, 0.9);
+    --content-bg: rgba(255, 253, 249, 0.94);
     --text: #15171c;
     --text-secondary: #595d66;
     --text-muted: #8c9098;
@@ -34,10 +34,9 @@
     --focus: rgba(56, 127, 245, 0.42);
     --panel-bg: rgba(255, 255, 255, 0.55);
     --dock-bg: rgba(255, 255, 255, 0.36);
-    --macos-wallpaper: url("https://media.512pixels.net/downloads/macos-wallpapers-6k/10-11-6k.jpg");
+    --macos-wallpaper: url("assets/wallpapers/el-capitan-web.jpg");
     --wallpaper:
-        linear-gradient(90deg, rgba(10, 12, 18, 0.16), rgba(10, 12, 18, 0.01) 45%, rgba(10, 12, 18, 0.16)),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(0, 0, 0, 0.08)),
+        linear-gradient(90deg, rgba(10, 12, 18, 0.08), rgba(10, 12, 18, 0) 45%, rgba(10, 12, 18, 0.08)),
         var(--macos-wallpaper);
 }
 
@@ -45,23 +44,21 @@
     --menu-bg: rgba(255, 252, 245, 0.52);
     --menu-text: rgba(24, 25, 26, 0.9);
     --window-bg: rgba(255, 253, 248, 0.78);
-    --sidebar-bg: rgba(246, 238, 224, 0.68);
-    --content-bg: rgba(255, 253, 248, 0.84);
+    --sidebar-bg: rgba(248, 243, 234, 0.92);
+    --content-bg: rgba(255, 253, 248, 0.96);
     --panel-bg: rgba(255, 250, 242, 0.58);
     --dock-bg: rgba(255, 248, 238, 0.48);
     --text: #181716;
     --text-secondary: #68615a;
     --text-muted: #9b938b;
     --wallpaper:
-        linear-gradient(90deg, rgba(61, 42, 36, 0.1), rgba(255, 232, 215, 0.04) 45%, rgba(35, 42, 58, 0.12)),
-        linear-gradient(180deg, rgba(255, 237, 218, 0.08), rgba(0, 0, 0, 0.04)),
+        linear-gradient(90deg, rgba(61, 42, 36, 0.04), rgba(255, 232, 215, 0.02) 45%, rgba(35, 42, 58, 0.06)),
         var(--macos-wallpaper);
 }
 
 [data-theme="sonoma"] {
     --wallpaper:
-        linear-gradient(90deg, rgba(10, 12, 18, 0.16), rgba(10, 12, 18, 0.01) 45%, rgba(10, 12, 18, 0.16)),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(0, 0, 0, 0.08)),
+        linear-gradient(90deg, rgba(10, 12, 18, 0.08), rgba(10, 12, 18, 0) 45%, rgba(10, 12, 18, 0.08)),
         var(--macos-wallpaper);
 }
 
@@ -137,7 +134,7 @@ svg {
     height: 100dvh;
     overflow: hidden;
     background: var(--wallpaper);
-    background-position: center;
+    background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
     transition: background 650ms ease, filter 350ms ease;
@@ -258,14 +255,14 @@ svg {
     max-width: 260px;
     padding: 5px 8px;
     border-radius: 7px;
-    color: rgba(255, 255, 255, 0.76);
-    background: rgba(0, 0, 0, 0.16);
+    color: rgba(255, 255, 255, 0.56);
+    background: rgba(0, 0, 0, 0.08);
     backdrop-filter: blur(12px) saturate(130%);
     -webkit-backdrop-filter: blur(12px) saturate(130%);
     font-size: 11px;
     text-decoration: none;
     text-shadow: 0 1px 5px rgba(0, 0, 0, 0.44);
-    opacity: 0.68;
+    opacity: 0.38;
     transition: opacity 160ms ease, background 160ms ease;
 }
 
@@ -789,34 +786,47 @@ a:hover {
 .dock {
     position: fixed;
     left: 50%;
-    bottom: 16px;
+    bottom: 18px;
     z-index: 80;
     transform: translateX(-50%);
-    min-height: 86px;
+    min-height: 68px;
     display: flex;
     align-items: end;
-    gap: 10px;
-    padding: 12px 16px 14px;
+    gap: 7px;
+    padding: 9px 13px 11px;
     border: 1px solid rgba(255, 255, 255, 0.38);
     border-radius: 18px;
-    background: rgba(232, 232, 238, 0.46);
-    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.3), inset 0 1px rgba(255, 255, 255, 0.48);
+    background: rgba(232, 232, 238, 0.44);
+    box-shadow:
+        0 18px 42px rgba(0, 0, 0, 0.3),
+        inset 0 1px rgba(255, 255, 255, 0.55);
 }
 
 .dock-icon {
     position: relative;
-    width: 54px;
-    height: 54px;
+    width: 50px;
+    height: 50px;
     border: 0;
     border-radius: 12px;
-    background: rgba(255, 255, 255, 0.38);
-    box-shadow: inset 0 1px rgba(255, 255, 255, 0.58), 0 9px 18px rgba(0, 0, 0, 0.24);
+    background: transparent;
+    box-shadow: none;
     cursor: pointer;
     display: grid;
     place-items: center;
     overflow: visible;
-    font-size: 26px;
+    font-size: 23px;
     transition: transform 180ms var(--spring), filter 180ms ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.dock-image-icon img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    user-select: none;
+    filter: drop-shadow(0 9px 10px rgba(0, 0, 0, 0.26));
 }
 
 .dock-icon::before {
@@ -838,7 +848,7 @@ a:hover {
 }
 
 .dock-icon:hover {
-    transform: translateY(-11px) scale(1.12);
+    transform: translateY(-12px) scale(1.14);
 }
 
 .dock-icon:hover::before {
@@ -858,7 +868,7 @@ a:hover {
 .dock-icon.is-active::after {
     content: "";
     position: absolute;
-    bottom: -8px;
+    bottom: -9px;
     width: 5px;
     height: 5px;
     border-radius: 50%;
@@ -871,162 +881,132 @@ a:hover {
 
 .dock-separator {
     width: 1px;
-    height: 50px;
+    height: 43px;
     margin: 0 4px;
     background: rgba(60, 62, 68, 0.22);
 }
 
-.finder-icon {
-    background: linear-gradient(90deg, #5bb7ff 0 50%, #d8f0ff 50% 100%);
-}
-
-.finder-face {
-    position: relative;
-    width: 34px;
-    height: 38px;
-}
-
-.finder-face::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(circle at 10px 13px, #10233a 0 1.8px, transparent 2px),
-        radial-gradient(circle at 25px 13px, #10233a 0 1.8px, transparent 2px),
-        linear-gradient(#10233a, #10233a) 17px 4px / 1px 23px no-repeat,
-        linear-gradient(160deg, transparent 48%, #10233a 50% 53%, transparent 55%),
-        linear-gradient(#10233a, #10233a) 9px 30px / 17px 1.5px no-repeat;
-}
-
-.notes-dock-icon {
-    background: linear-gradient(#ffe66b 0 28%, #fffef7 28% 100%);
-}
-
-.notes-dock-icon span {
-    width: 34px;
-    height: 28px;
-    background: repeating-linear-gradient(#d9d6ca 0 1px, transparent 1px 7px);
-}
-
-.messages-icon {
-    background: linear-gradient(145deg, #83f087, #22c95a);
-    border-radius: 15px;
-}
-
-.messages-icon span {
-    width: 35px;
-    height: 27px;
-    border-radius: 50%;
-    background: white;
-    position: relative;
-}
-
-.messages-icon span::after {
-    content: "";
-    position: absolute;
-    left: 8px;
-    bottom: -5px;
-    border: 7px solid transparent;
-    border-top-color: white;
-    transform: rotate(26deg);
-}
-
-.photos-icon {
-    background: #fff;
-}
-
-.photos-icon span,
-.photos-icon span::before,
-.photos-icon span::after {
-    position: absolute;
-    width: 14px;
-    height: 30px;
-    border-radius: 999px;
-    transform-origin: 50% 100%;
-}
-
-.photos-icon span {
-    background: #ffcf43;
-    transform: rotate(0deg) translateY(-8px);
-}
-
-.photos-icon span::before {
-    content: "";
-    background: #ff5f57;
-    transform: rotate(60deg);
-}
-
-.photos-icon span::after {
-    content: "";
-    background: #5ac8fa;
-    transform: rotate(120deg);
-}
-
-.music-icon {
-    color: #fff;
-    background: linear-gradient(145deg, #ff6b7a, #ff2d55);
-    font-weight: 800;
-}
-
 .calendar-icon {
-    background: #fff;
+    background: linear-gradient(180deg, #ffffff 0%, #fbfbfb 58%, #f0f0f0 100%);
     color: #111;
     overflow: hidden;
+    border-radius: 11px;
+    box-shadow:
+        0 9px 10px rgba(0, 0, 0, 0.24),
+        inset 0 0 0 0.5px rgba(0, 0, 0, 0.08),
+        inset 0 1px rgba(255, 255, 255, 0.7);
 }
 
 .calendar-icon span {
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-rows: 18px 1fr;
+    grid-template-rows: 15px 1fr;
     text-align: center;
 }
 
 .calendar-icon b {
     display: grid;
-    place-items: center;
+    align-items: end;
+    justify-items: center;
+    font-family: var(--font);
     color: #ff3b30;
-    font-size: 11px;
-    font-weight: 800;
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1;
+    padding-top: 4px;
+    text-transform: none;
 }
 
 .calendar-icon strong {
     display: grid;
-    place-items: center;
-    font-size: 25px;
+    align-items: start;
+    justify-items: center;
+    font-family: var(--font);
+    font-size: 23px;
+    font-weight: 300;
+    font-variant-numeric: proportional-nums;
     line-height: 1;
+    padding-top: 0;
+    letter-spacing: 0;
 }
 
-.terminal-dock-icon {
-    background: linear-gradient(145deg, #16161c, #050506);
-    color: #67ff88;
+.desktop-popover {
+    position: fixed;
+    z-index: 130;
+    width: 244px;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.38);
+    border-radius: 12px;
+    color: rgba(24, 26, 31, 0.92);
+    background: rgba(246, 246, 248, 0.72);
+    backdrop-filter: blur(28px) saturate(170%);
+    -webkit-backdrop-filter: blur(28px) saturate(170%);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.28), inset 0 1px rgba(255, 255, 255, 0.48);
+    font-size: 13px;
+}
+
+.desktop-popover[hidden] {
+    display: none;
+}
+
+.desktop-popover strong {
+    display: block;
+    margin: 2px 2px 8px;
+    font-size: 13px;
+}
+
+.desktop-popover p {
+    margin: 4px 2px 10px;
+    color: rgba(46, 50, 58, 0.76);
+    line-height: 1.35;
+}
+
+.desktop-popover .popover-muted {
+    color: rgba(80, 84, 92, 0.62);
+    font-size: 12px;
+}
+
+.desktop-popover code {
+    display: block;
+    margin: 5px 2px 10px;
+    padding: 8px;
+    border-radius: 8px;
+    color: #5aff89;
+    background: rgba(0, 0, 0, 0.86);
     font-family: var(--mono);
+    font-size: 12px;
 }
 
-.settings-icon {
-    background: linear-gradient(145deg, #c5c9d0, #7d838d);
+.desktop-popover button,
+.desktop-popover a {
+    width: 100%;
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+    border: 0;
+    border-radius: 7px;
+    padding: 6px 8px;
+    color: inherit;
+    background: transparent;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
 }
 
-.settings-icon span {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background:
-        radial-gradient(circle, transparent 0 7px, #eef0f3 7px 10px, transparent 10px),
-        repeating-conic-gradient(#eef0f3 0 12deg, transparent 12deg 24deg);
+.desktop-popover button:hover,
+.desktop-popover a:hover,
+.desktop-popover button:focus-visible,
+.desktop-popover a:focus-visible {
+    background: rgba(0, 102, 255, 0.14);
+    outline: none;
 }
 
-.trash-icon {
-    background: linear-gradient(145deg, rgba(250, 250, 255, 0.92), rgba(185, 196, 210, 0.82));
-}
-
-.trash-icon span {
-    width: 32px;
-    height: 37px;
-    border: 2px solid rgba(70, 78, 92, 0.42);
-    border-top: 6px solid rgba(70, 78, 92, 0.42);
-    border-radius: 3px 3px 8px 8px;
-    background: repeating-linear-gradient(90deg, transparent 0 7px, rgba(70, 78, 92, 0.2) 7px 8px);
+.desktop-popover hr {
+    height: 1px;
+    margin: 6px 0;
+    border: 0;
+    background: rgba(0, 0, 0, 0.12);
 }
 
 .toast {
@@ -1129,55 +1109,84 @@ a:hover {
     }
 
     .notes-shell {
-        display: block;
-        position: relative;
+        display: grid;
+        grid-template-columns: 236px minmax(0, 1fr);
     }
 
     .sidebar {
-        position: absolute;
-        inset: 0 auto 0 0;
-        width: 284px;
-        z-index: 2;
-        transform: translateX(-100%);
-        transition: transform 220ms var(--ease);
-        box-shadow: 10px 0 28px rgba(0, 0, 0, 0.22);
+        position: static;
+        width: auto;
+        transform: none;
+        box-shadow: none;
+        background: var(--sidebar-bg);
     }
 
     .sidebar.open {
-        transform: translateX(0);
+        transform: none;
     }
 
     .sidebar-overlay {
         display: none;
-        position: absolute;
-        inset: 44px 0 84px;
-        z-index: 21;
-        background: rgba(0, 0, 0, 0.24);
     }
 
     .sidebar-overlay.show {
-        display: block;
+        display: none;
     }
 
     .content {
         height: 100%;
-        padding: 24px 20px 68px;
+        padding: 26px 22px 68px;
+    }
+
+    .search-bar {
+        margin-inline: 12px;
+    }
+
+    .note-group-label {
+        padding-left: 16px;
+    }
+
+    .note-item {
+        width: calc(100% - 14px);
+        margin-inline: 7px;
+        padding: 9px 10px;
+    }
+
+    .note-item-title {
+        font-size: 13px;
+    }
+
+    .note-item-meta {
+        font-size: 11px;
     }
 
     .mobile-sidebar-toggle {
-        display: grid;
-        place-items: center;
-        width: 34px;
-        height: 34px;
-        margin-bottom: 14px;
-        border: 0;
-        border-radius: 8px;
-        background: var(--search-bg);
-        color: var(--text-secondary);
+        display: none;
     }
 
     .note h1 {
-        font-size: 25px;
+        font-size: 24px;
+    }
+
+    .note-date {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .note-lead {
+        margin-bottom: 24px;
+    }
+
+    .note h2 {
+        margin-top: 26px;
+    }
+
+    .note ul {
+        padding-left: 22px;
+    }
+
+    .note li {
+        font-size: 14px;
     }
 
     .dock {
@@ -1200,5 +1209,50 @@ a:hover {
         right: 14px;
         bottom: 88px;
         max-width: none;
+    }
+}
+
+@media (max-width: 520px) {
+    .notes-shell {
+        display: block;
+        position: relative;
+    }
+
+    .sidebar {
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: min(284px, calc(100vw - 42px));
+        z-index: 2;
+        transform: translateX(-100%);
+        transition: transform 220ms var(--ease);
+        box-shadow: 10px 0 28px rgba(0, 0, 0, 0.22);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .sidebar-overlay {
+        display: none;
+        position: absolute;
+        inset: 44px 0 84px;
+        z-index: 21;
+        background: rgba(0, 0, 0, 0.24);
+    }
+
+    .sidebar-overlay.show {
+        display: block;
+    }
+
+    .mobile-sidebar-toggle {
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        margin-bottom: 14px;
+        border: 0;
+        border-radius: 8px;
+        background: var(--search-bg);
+        color: var(--text-secondary);
     }
 }
