@@ -15,9 +15,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const spotlightInput = document.getElementById('spotlight-input');
     const spotlightResults = document.getElementById('spotlight-results');
     const toast = document.getElementById('toast');
+    const desktopPopover = document.getElementById('desktop-popover');
     const menuClock = document.getElementById('menu-clock');
     const themeNames = ['sonoma', 'daybreak', 'midnight'];
-    const THEME_KEY = 'pg-theme';
+    const THEME_KEY = 'pg-theme-v2';
 
     let frontZ = 40;
     let toastTimer = null;
@@ -37,6 +38,78 @@ document.addEventListener('DOMContentLoaded', function () {
         toastTimer = setTimeout(function () {
             toast.classList.remove('show');
         }, 2600);
+    }
+
+    function bounceDockIcon(button) {
+        if (!button) return;
+        button.classList.remove('is-bouncing');
+        button.offsetHeight;
+        button.classList.add('is-bouncing');
+        setTimeout(function () {
+            button.classList.remove('is-bouncing');
+        }, 520);
+    }
+
+    function closeDesktopPopover() {
+        if (!desktopPopover) return;
+        desktopPopover.hidden = true;
+        desktopPopover.innerHTML = '';
+        desktopPopover.className = 'desktop-popover';
+    }
+
+    function positionPopover(anchor, placement) {
+        if (!desktopPopover || !anchor) return;
+        const rect = anchor.getBoundingClientRect();
+        const popRect = desktopPopover.getBoundingClientRect();
+        const gap = placement === 'below' ? 8 : 12;
+        let left = rect.left + rect.width / 2 - popRect.width / 2;
+        let top = placement === 'below'
+            ? rect.bottom + gap
+            : rect.top - popRect.height - gap;
+
+        left = Math.max(10, Math.min(left, window.innerWidth - popRect.width - 10));
+        top = Math.max(40, Math.min(top, window.innerHeight - popRect.height - 12));
+        desktopPopover.style.left = left + 'px';
+        desktopPopover.style.top = top + 'px';
+    }
+
+    function showDesktopPopover(anchor, html, placement) {
+        if (!desktopPopover) return;
+        desktopPopover.innerHTML = html;
+        desktopPopover.hidden = false;
+        desktopPopover.className = 'desktop-popover ' + (placement === 'below' ? 'is-menu' : 'is-dock');
+        requestAnimationFrame(function () {
+            positionPopover(anchor, placement || 'above');
+        });
+    }
+
+    function menuHtml(kind) {
+        const menus = {
+            apple: '<strong>PranavOS</strong><button data-popover-note="about">About Pranav</button><button data-popover-action="spotlight">Spotlight Search</button><hr><button data-popover-action="noop">System Settings...</button>',
+            file: '<button data-popover-note="about">Open About Me</button><button data-popover-note="links">Open Quick Links</button><button data-popover-note="publications">Open Publications</button><hr><button data-popover-action="mailto">New Message to Pranav</button>',
+            edit: '<button data-popover-action="focus-search">Find in Notes</button><button data-popover-action="spotlight">Search All Notes</button>',
+            view: '<button data-popover-action="zoom-notes">Zoom Notes Window</button><button data-popover-theme="daybreak">Light Wallpaper Tint</button><button data-popover-theme="sonoma">Natural Wallpaper Tint</button><button data-popover-theme="midnight">Dark Wallpaper Tint</button>',
+            window: '<button data-popover-action="open-notes">Bring Notes to Front</button><button data-popover-action="minimize-notes">Minimize Notes</button>',
+            help: '<strong>Notes Help</strong><button data-popover-note="about">About Me</button><button data-popover-note="principles">Principles</button>',
+            battery: '<strong>Battery</strong><p>100% · Power Adapter</p>',
+            wifi: '<strong>Wi-Fi</strong><p>Connected</p><p class="popover-muted">Signal: full bars.</p>',
+            control: '<strong>Control Center</strong><button data-popover-theme="daybreak">Light</button><button data-popover-theme="sonoma">Natural</button><button data-popover-theme="midnight">Dark</button><hr><button data-popover-action="spotlight">Spotlight</button>'
+        };
+        return menus[kind] || '';
+    }
+
+    function dockHtml(kind) {
+        const docks = {
+            finder: '<strong>Finder</strong><button data-popover-note="about">About Me</button><button data-popover-note="links">Quick Links</button><button data-popover-note="publications">Publications</button>',
+            messages: '<strong>Messages</strong><a href="mailto:pranavguruprasad0@gmail.com?subject=hi%20pranav&body=%0A%0A%E2%80%94%20sent%20from%20pranav%27s%20website">New Message</a>',
+            photos: '<strong>Photos</strong><p>OS X El Capitan</p>',
+            music: '<strong>Music</strong><button data-popover-note="music">On Repeat</button>',
+            calendar: '<strong>Calendar</strong><p>Thursday, June 18, 2026</p><button data-popover-note="principles">Open Today Notes</button>',
+            terminal: '<strong>Terminal</strong><code>open notes://about-me</code><button data-popover-note="about">Run</button>',
+            settings: '<strong>System Settings</strong><p>Wallpaper tint</p><button data-popover-theme="daybreak">Light</button><button data-popover-theme="sonoma">Natural</button><button data-popover-theme="midnight">Dark</button>',
+            trash: '<strong>Trash</strong><p>Empty</p>'
+        };
+        return docks[kind] || '';
     }
 
     function cleanTitle(text) {
@@ -239,20 +312,68 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.querySelectorAll('[data-open-window]').forEach(function (button) {
         button.addEventListener('click', function () {
+            closeDesktopPopover();
+            bounceDockIcon(button.closest('.dock-icon') || button);
             openWindow(button.getAttribute('data-open-window'));
         });
     });
 
-    document.querySelectorAll('.dock-icon:not([data-open-window]):not([data-toggle-theme])').forEach(function (button) {
+    document.querySelectorAll('[data-menu]').forEach(function (button) {
         button.addEventListener('click', function () {
-            button.classList.remove('is-bouncing');
-            button.offsetHeight;
-            button.classList.add('is-bouncing');
-            setTimeout(function () {
-                button.classList.remove('is-bouncing');
-            }, 520);
+            const html = menuHtml(button.getAttribute('data-menu'));
+            if (html) showDesktopPopover(button, html, 'below');
         });
     });
+
+    document.querySelectorAll('[data-dock-action]').forEach(function (button) {
+        button.addEventListener('click', function () {
+            bounceDockIcon(button);
+            showDesktopPopover(button, dockHtml(button.getAttribute('data-dock-action')), 'above');
+        });
+    });
+
+    if (desktopPopover) {
+        desktopPopover.addEventListener('click', function (event) {
+            const noteButton = event.target.closest('[data-popover-note]');
+            const themeButton = event.target.closest('[data-popover-theme]');
+            const actionButton = event.target.closest('[data-popover-action]');
+
+            if (noteButton) {
+                openNote(noteButton.getAttribute('data-popover-note'));
+                closeDesktopPopover();
+                return;
+            }
+
+            if (themeButton) {
+                applyTheme(themeButton.getAttribute('data-popover-theme'));
+                return;
+            }
+
+            if (!actionButton) return;
+            const action = actionButton.getAttribute('data-popover-action');
+            if (action === 'spotlight') {
+                closeDesktopPopover();
+                openSpotlight();
+            } else if (action === 'focus-search') {
+                closeDesktopPopover();
+                openWindow('notes');
+                if (searchInput) searchInput.focus();
+            } else if (action === 'zoom-notes') {
+                const notesWindow = document.getElementById('notes-window');
+                if (notesWindow) notesWindow.classList.toggle('is-zoomed');
+                closeDesktopPopover();
+            } else if (action === 'open-notes') {
+                closeDesktopPopover();
+                openWindow('notes');
+            } else if (action === 'minimize-notes') {
+                const notesWindow = document.getElementById('notes-window');
+                closeDesktopPopover();
+                if (notesWindow) minimizeWindow(notesWindow);
+            } else if (action === 'mailto') {
+                window.location.href = 'mailto:pranavguruprasad0@gmail.com?subject=hi%20pranav&body=%0A%0A%E2%80%94%20sent%20from%20pranav%27s%20website';
+            }
+        });
+    }
 
     document.querySelectorAll('[data-window-action]').forEach(function (button) {
         button.addEventListener('click', function (event) {
@@ -370,9 +491,17 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('keydown', function (event) {
         if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
             event.preventDefault();
+            closeDesktopPopover();
             openSpotlight();
         }
         if (event.key === 'Escape' && !spotlight.hidden) closeSpotlight();
+        if (event.key === 'Escape') closeDesktopPopover();
+    });
+
+    document.addEventListener('pointerdown', function (event) {
+        if (!desktopPopover || desktopPopover.hidden) return;
+        if (event.target.closest('#desktop-popover, [data-menu], .dock-icon')) return;
+        closeDesktopPopover();
     });
 
     function makeDraggable(win) {
@@ -459,6 +588,15 @@ document.addEventListener('DOMContentLoaded', function () {
         const time = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
         menuClock.textContent = date + ' ' + time;
         menuClock.dateTime = now.toISOString();
+
+        const calendarWeekday = document.querySelector('[data-calendar-weekday]');
+        const calendarDay = document.querySelector('[data-calendar-day]');
+        if (calendarWeekday && calendarDay) {
+            const weekday = now.toLocaleDateString([], { weekday: 'short' });
+            const day = now.toLocaleDateString([], { day: 'numeric' });
+            calendarWeekday.textContent = weekday;
+            calendarDay.textContent = day;
+        }
     }
 
     updateClock();

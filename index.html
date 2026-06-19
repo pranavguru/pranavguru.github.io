@@ -8,7 +8,7 @@
     <script>
         (function () {
             try {
-                var t = localStorage.getItem('pg-theme');
+                var t = localStorage.getItem('pg-theme-v2');
                 document.documentElement.setAttribute('data-theme',
                     (t === 'daybreak' || t === 'sonoma' || t === 'midnight') ? t : 'sonoma');
             } catch (e) {
@@ -24,22 +24,22 @@
 
         <header class="menu-bar" aria-label="macOS menu bar">
             <nav class="menu-left" aria-label="Application menu">
-                <button class="menu-logo" type="button" data-open-note="about" aria-label="Open about note"></button>
+                <button class="menu-logo" type="button" data-menu="apple" aria-label="Apple menu"></button>
                 <button type="button" class="menu-item is-strong" data-open-window="notes">Notes</button>
-                <button type="button" class="menu-item">File</button>
-                <button type="button" class="menu-item">Edit</button>
-                <button type="button" class="menu-item">View</button>
-                <button type="button" class="menu-item">Window</button>
-                <button type="button" class="menu-item">Help</button>
+                <button type="button" class="menu-item" data-menu="file">File</button>
+                <button type="button" class="menu-item" data-menu="edit">Edit</button>
+                <button type="button" class="menu-item" data-menu="view">View</button>
+                <button type="button" class="menu-item" data-menu="window">Window</button>
+                <button type="button" class="menu-item" data-menu="help">Help</button>
             </nav>
             <div class="menu-right">
-                <span class="status-pill status-icon" aria-label="Battery">
+                <button type="button" class="status-pill status-icon" data-menu="battery" aria-label="Battery">
                     <svg viewBox="0 0 28 16" aria-hidden="true"><rect x="2" y="3" width="21" height="10" rx="2"></rect><path d="M25 6v4"></path><rect x="5" y="6" width="14" height="4" rx="1" fill="currentColor" stroke="none"></rect></svg>
-                </span>
-                <span class="status-pill status-icon" aria-label="Wi-Fi">
+                </button>
+                <button type="button" class="status-pill status-icon" data-menu="wifi" aria-label="Wi-Fi">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 9.2a13.4 13.4 0 0 1 17 0"></path><path d="M7 13a8 8 0 0 1 10 0"></path><path d="M10.3 16.7a3.1 3.1 0 0 1 3.4 0"></path><circle cx="12" cy="20" r="0.7" fill="currentColor" stroke="none"></circle></svg>
-                </span>
-                <button type="button" class="status-pill status-icon" data-toggle-theme aria-label="Change wallpaper tint">
+                </button>
+                <button type="button" class="status-pill status-icon" data-menu="control" aria-label="Control Center">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="4" y1="6" x2="20" y2="6"></line><circle cx="9" cy="6" r="2"></circle><line x1="4" y1="12" x2="20" y2="12"></line><circle cx="15" cy="12" r="2"></circle><line x1="4" y1="18" x2="20" y2="18"></line><circle cx="11" cy="18" r="2"></circle></svg>
                 </button>
                 <time class="menu-clock" id="menu-clock" datetime="">Thu Jun 18 9:41 AM</time>
@@ -236,36 +236,37 @@
         <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
         <nav class="dock" aria-label="Dock">
-            <button class="dock-icon finder-icon" type="button" data-dock-label="Finder" aria-label="Finder">
-                <span class="finder-face"></span>
+            <button class="dock-icon dock-image-icon" type="button" data-dock-label="Finder" data-dock-action="finder" aria-label="Finder">
+                <img src="assets/dock-icons/finder.png" alt="" draggable="false">
             </button>
-            <button class="dock-icon notes-dock-icon is-active" type="button" data-open-window="notes" data-dock-label="Notes" aria-label="Open Notes">
-                <span></span>
+            <button class="dock-icon dock-image-icon is-active" type="button" data-open-window="notes" data-dock-label="Notes" aria-label="Open Notes">
+                <img src="assets/dock-icons/notes.png" alt="" draggable="false">
             </button>
-            <button class="dock-icon messages-icon" type="button" data-dock-label="Messages" aria-label="Messages">
-                <span></span>
+            <button class="dock-icon dock-image-icon" type="button" data-dock-label="Messages" data-dock-action="messages" aria-label="Messages">
+                <img src="assets/dock-icons/messages.png" alt="" draggable="false">
             </button>
-            <button class="dock-icon photos-icon" type="button" data-dock-label="Photos" aria-label="Photos">
-                <span></span>
+            <button class="dock-icon dock-image-icon" type="button" data-dock-label="Photos" data-dock-action="photos" aria-label="Photos">
+                <img src="assets/dock-icons/photos.png" alt="" draggable="false">
             </button>
-            <button class="dock-icon music-icon" type="button" data-dock-label="Music" aria-label="Music">
-                <span>♪</span>
+            <button class="dock-icon dock-image-icon" type="button" data-dock-label="Music" data-dock-action="music" aria-label="Music">
+                <img src="assets/dock-icons/music.png" alt="" draggable="false">
             </button>
-            <button class="dock-icon calendar-icon" type="button" data-dock-label="Calendar" aria-label="Calendar">
-                <span><b>Thu</b><strong>18</strong></span>
+            <button class="dock-icon calendar-icon" type="button" data-dock-label="Calendar" data-dock-action="calendar" aria-label="Calendar">
+                <span><b data-calendar-weekday>Thu</b><strong data-calendar-day>18</strong></span>
             </button>
-            <button class="dock-icon terminal-dock-icon" type="button" data-dock-label="Terminal" aria-label="Terminal">
-                <span>$</span>
+            <button class="dock-icon dock-image-icon" type="button" data-dock-label="Terminal" data-dock-action="terminal" aria-label="Terminal">
+                <img src="assets/dock-icons/terminal.png" alt="" draggable="false">
             </button>
-            <button class="dock-icon settings-icon" type="button" data-toggle-theme data-dock-label="System Settings" aria-label="System Settings">
-                <span></span>
+            <button class="dock-icon dock-image-icon" type="button" data-dock-label="System Settings" data-dock-action="settings" aria-label="System Settings">
+                <img src="assets/dock-icons/settings.png" alt="" draggable="false">
             </button>
             <span class="dock-separator" aria-hidden="true"></span>
-            <button class="dock-icon trash-icon" type="button" data-dock-label="Trash" aria-label="Trash">
-                <span></span>
+            <button class="dock-icon dock-image-icon" type="button" data-dock-label="Trash" data-dock-action="trash" aria-label="Trash">
+                <img src="assets/dock-icons/trash.png" alt="" draggable="false">
             </button>
         </nav>
 
+        <div class="desktop-popover" id="desktop-popover" hidden></div>
         <div class="toast" id="toast" role="status" aria-live="polite"></div>
     </div>
 
