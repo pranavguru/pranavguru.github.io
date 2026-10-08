@@ -3,273 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pranav Guruprasad — researcher and engineer working on intelligent systems.">
     <title>Pranav Guruprasad</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌊</text></svg>">
-    <script>
-        (function () {
-            try {
-                var t = localStorage.getItem('pg-theme-v2');
-                document.documentElement.setAttribute('data-theme',
-                    (t === 'daybreak' || t === 'sonoma' || t === 'midnight') ? t : 'sonoma');
-            } catch (e) {
-                document.documentElement.setAttribute('data-theme', 'sonoma');
-            }
-        })();
-    </script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="desktop" id="desktop">
-        <div class="wallpaper-grain" aria-hidden="true"></div>
+    <main class="shore" id="top">
+        <video class="sea-video" autoplay muted loop playsinline preload="auto" poster="assets/images/hawaii-ocean-poster.jpg" aria-hidden="true">
+            <source src="assets/videos/hawaii-ocean-waves.mp4" type="video/mp4">
+        </video>
+        <div class="sea" aria-hidden="true"></div>
+        <div class="grain" aria-hidden="true"></div>
 
-        <header class="menu-bar" aria-label="macOS menu bar">
-            <nav class="menu-left" aria-label="Application menu">
-                <button class="menu-logo" type="button" data-menu="apple" aria-label="Apple menu"></button>
-                <button type="button" class="menu-item is-strong" data-open-window="notes">Notes</button>
-                <button type="button" class="menu-item" data-menu="file">File</button>
-                <button type="button" class="menu-item" data-menu="edit">Edit</button>
-                <button type="button" class="menu-item" data-menu="view">View</button>
-                <button type="button" class="menu-item" data-menu="window">Window</button>
-                <button type="button" class="menu-item" data-menu="help">Help</button>
-            </nav>
-            <div class="menu-right">
-                <button type="button" class="status-pill status-icon" data-menu="battery" aria-label="Battery">
-                    <svg viewBox="0 0 28 16" aria-hidden="true"><rect x="2" y="3" width="21" height="10" rx="2"></rect><path d="M25 6v4"></path><rect x="5" y="6" width="14" height="4" rx="1" fill="currentColor" stroke="none"></rect></svg>
-                </button>
-                <button type="button" class="status-pill status-icon" data-menu="wifi" aria-label="Wi-Fi">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 9.2a13.4 13.4 0 0 1 17 0"></path><path d="M7 13a8 8 0 0 1 10 0"></path><path d="M10.3 16.7a3.1 3.1 0 0 1 3.4 0"></path><circle cx="12" cy="20" r="0.7" fill="currentColor" stroke="none"></circle></svg>
-                </button>
-                <button type="button" class="status-pill status-icon" data-menu="control" aria-label="Control Center">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="4" y1="6" x2="20" y2="6"></line><circle cx="9" cy="6" r="2"></circle><line x1="4" y1="12" x2="20" y2="12"></line><circle cx="15" cy="12" r="2"></circle><line x1="4" y1="18" x2="20" y2="18"></line><circle cx="11" cy="18" r="2"></circle></svg>
-                </button>
-                <time class="menu-clock" id="menu-clock" datetime="">Thu Jun 18 9:41 AM</time>
+        <header class="masthead">
+            <a class="wordmark" href="#top" aria-label="Return home">PG</a>
+            <p>san francisco · <span data-period-label>local time</span></p>
+            <div class="masthead-actions">
+                <button class="sound-toggle" type="button" aria-pressed="false" aria-label="Pause background video">pause video</button>
             </div>
         </header>
 
-        <a class="wallpaper-credit" href="https://512pixels.net/projects/default-mac-wallpapers-in-5k/#1011-el-capitan" target="_blank" rel="noopener">
-            OS X El Capitan wallpaper · 512 Pixels archive
-        </a>
-
-        <div class="spotlight" id="spotlight" role="dialog" aria-modal="true" aria-label="Spotlight search" hidden>
-            <div class="spotlight-panel">
-                <div class="spotlight-input-row">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" y1="16.5" x2="21" y2="21"></line></svg>
-                    <input id="spotlight-input" type="search" placeholder="Search Pranav's notes" autocomplete="off" spellcheck="false">
-                </div>
-                <div class="spotlight-results" id="spotlight-results"></div>
-            </div>
-        </div>
-
-        <section class="app-window notes-app" id="notes-window" data-window="notes" aria-label="Notes app">
-            <div class="window-titlebar" data-drag-handle>
-                <div class="traffic-lights" aria-label="Window controls">
-                    <button class="dot red" type="button" data-window-action="close" aria-label="Close Notes"></button>
-                    <button class="dot yellow" type="button" data-window-action="minimize" aria-label="Minimize Notes"></button>
-                    <button class="dot green" type="button" data-window-action="zoom" aria-label="Zoom Notes"></button>
-                </div>
-                <div class="window-title">
-                    <span>Notes</span>
-                    <small>iCloud · pranav</small>
-                </div>
-                <div class="window-actions">
-                    <button type="button" class="tool-button" data-open-spotlight aria-label="Search notes">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" y1="16.5" x2="21" y2="21"></line></svg>
-                    </button>
-                    <a class="tool-button" aria-label="Send Pranav a note" href="mailto:pranavguruprasad0@gmail.com?subject=hi%20pranav&body=%0A%0A%E2%80%94%20sent%20from%20pranav%27s%20website">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"></path></svg>
-                    </a>
-                </div>
-            </div>
-
-            <div class="notes-shell">
-                <aside class="sidebar">
-                    <div class="search-bar">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                        <input type="text" id="search-input" placeholder="Search" autocomplete="off" spellcheck="false">
-                        <button type="button" class="search-clear" id="search-clear" aria-label="Clear search" tabindex="-1">
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                        </button>
-                    </div>
-                    <div class="search-empty" id="search-empty" hidden>
-                        <div class="search-empty-title">No results</div>
-                        <div class="search-empty-meta">Try a different search.</div>
-                    </div>
-
-                    <div class="note-group">
-                        <div class="note-group-label">Pinned</div>
-                        <button class="note-item active" type="button" data-note="about">
-                            <span class="note-item-title">📍 about me</span>
-                            <span class="note-item-meta"><span class="note-item-date">4/21/2026</span> researcher & engineer working on...</span>
-                        </button>
-                        <button class="note-item" type="button" data-note="links">
-                            <span class="note-item-title">🔗 quick links</span>
-                            <span class="note-item-meta"><span class="note-item-date">4/21/2026</span> twitter, github, google scholar...</span>
-                        </button>
-                    </div>
-
-                    <div class="note-group">
-                        <div class="note-group-label">Today</div>
-                        <button class="note-item" type="button" data-note="principles">
-                            <span class="note-item-title">🧭 principles</span>
-                            <span class="note-item-meta"><span class="note-item-date">4/21/2026</span> build things that matter...</span>
-                        </button>
-                        <button class="note-item" type="button" data-note="bookmarks">
-                            <span class="note-item-title">🔖 bookmarks</span>
-                            <span class="note-item-meta"><span class="note-item-date">4/21/2026</span> favorite corners of the internet...</span>
-                        </button>
-                    </div>
-
-                    <div class="note-group">
-                        <div class="note-group-label">Yesterday</div>
-                        <button class="note-item" type="button" data-note="music">
-                            <span class="note-item-title">🎧 on repeat</span>
-                            <span class="note-item-meta"><span class="note-item-date">4/20/2026</span> what i've been listening to...</span>
-                        </button>
-                        <button class="note-item" type="button" data-note="reading">
-                            <span class="note-item-title">📚 reading list</span>
-                            <span class="note-item-meta"><span class="note-item-date">4/20/2026</span> books that shaped how i think...</span>
-                        </button>
-                    </div>
-
-                    <div class="note-group">
-                        <div class="note-group-label">Previous 7 Days</div>
-                        <button class="note-item" type="button" data-note="publications">
-                            <span class="note-item-title">📄 publications</span>
-                            <span class="note-item-meta"><span class="note-item-date">4/15/2026</span> selected research papers...</span>
-                        </button>
-                    </div>
-                </aside>
-
-                <main class="content">
-                    <button class="mobile-sidebar-toggle" type="button" aria-label="Open notes list">☰</button>
-
-                    <article class="note" id="note-about">
-                        <div class="note-date">Entry · 04.21.2026 · 08:16</div>
-                        <h1>📍 about me</h1>
-                        <p class="note-lead">my name is pranav guruprasad</p>
-
-                        <h2>currently</h2>
-                        <ul>
-                            <li>building foundation models & AI systems at <a href="https://fig.inc">fig</a> that can take actions over long horizons in the software world</li>
-                            <li>interested in the intersection of multimodal understanding and action taking capabilities of AI systems</li>
-                            <li>living in <a href="https://en.wikipedia.org/wiki/San_Francisco">san francisco</a>, originally from <a href="https://en.wikipedia.org/wiki/Bangalore">bangalore</a></li>
-                        </ul>
-
-                        <h2>previously</h2>
-                        <ul>
-                            <li>studied computer science & machine learning at <a href="https://www.gatech.edu/">georgia tech</a> and <a href="https://www.bits-pilani.ac.in/goa/">bits pilani, goa</a></li>
-                            <li>made early contributions to <a href="https://x.com/GotIt_AI">got-it-ai</a>, the first fully autonomous conversational AI platform</li>
-                            <li>worked in defense tech on multimodal systems to safeguard personnel</li>
-                            <li>research at <a href="https://www.lbl.gov/">berkeley lab</a> on <a href="https://bouchardlab.lbl.gov/">brain-machine interfaces</a> — characterizing the relationship between cortical surface electrical potentials and intracortical signals</li>
-                            <li>research at <a href="https://www.iitm.ac.in/">iit madras</a> on <a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=vrtIqhEAAAAJ&citation_for_view=vrtIqhEAAAAJ:d1gkVwhDpl0C">automating the annotation of handwritten text</a></li>
-                        </ul>
-
-                        <h2>outside of work</h2>
-                        <ul>
-                            <li>love playing and watching sports - mostly football and tennis</li>
-                            <li>amateur tennis player - chasing a 4.0 rating & first tournament in 2026 🎾</li>
-                            <li>amateur surfer and scuba diver trying to get less amateur 🏄 🤿</li>
-                            <li>training for a full marathon in 2026 - ran a <a href="https://strava.app.link/atvB5dhL8Ub">sub-2h half marathon</a> last year 🏃</li>
-                        </ul>
-                    </article>
-
-                    <article class="note hidden" id="note-links">
-                        <div class="note-date">Entry · 04.21.2026 · 09:02</div>
-                        <h1>🔗 quick links</h1>
-                        <p class="note-lead">all the places you can find me on the internet</p>
-                        <ul>
-                            <li><a href="https://x.com/pranavguru13">twitter</a> - occasional thoughts & retweets</li>
-                            <li><a href="https://github.com/pranavguru">github</a> - code & open source</li>
-                            <li><a href="https://scholar.google.com/citations?user=vrtIqhEAAAAJ&hl=en">google scholar</a> - research papers</li>
-                        </ul>
-                    </article>
-
-                    <article class="note hidden" id="note-principles">
-                        <div class="note-date">Entry · 04.21.2026 · 07:30</div>
-                        <h1>🧭 principles</h1>
-                        <p class="note-lead">things i try to live by</p>
-                        <ul>
-                            <li>increase your surface area for luck</li>
-                            <li>stay curious - the best ideas come from unexpected intersections</li>
-                            <li>default to action over analysis paralysis</li>
-                            <li>optimize for learning rate, not current knowledge</li>
-                        </ul>
-                    </article>
-
-                    <article class="note hidden" id="note-bookmarks">
-                        <div class="note-date">Entry · 04.21.2026 · 10:15</div>
-                        <h1>🔖 bookmarks</h1>
-                        <p class="note-lead">favorite corners of the internet</p>
-                        <p class="note-body">coming soon - collecting my favorite essays, tools, and rabbit holes.</p>
-                    </article>
-
-                    <article class="note hidden" id="note-music">
-                        <div class="note-date">Entry · 04.20.2026 · 18:45</div>
-                        <h1>🎧 on repeat</h1>
-                        <p class="note-lead">what i've been listening to lately</p>
-                        <p class="note-body">coming soon - playlists, podcasts, and albums on rotation.</p>
-                    </article>
-
-                    <article class="note hidden" id="note-reading">
-                        <div class="note-date">Entry · 04.20.2026 · 15:20</div>
-                        <h1>📚 reading list</h1>
-                        <p class="note-lead">books that shaped how i think</p>
-                        <p class="note-body">coming soon - a regularly updated log of the books i'm reading and the ones that stuck with me.</p>
-                    </article>
-
-                    <article class="note hidden" id="note-publications">
-                        <div class="note-date">Entry · 04.15.2026 · 11:00</div>
-                        <h1>📄 publications</h1>
-                        <p class="note-lead">selected research papers</p>
-                        <ul>
-                            <li><a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=vrtIqhEAAAAJ&citation_for_view=vrtIqhEAAAAJ:zYLM7Y9cAGgC">an open-source software toolkit & benchmark suite for the evaluation and adaptation of multimodal action models</a></li>
-                            <li><a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=vrtIqhEAAAAJ&citation_for_view=vrtIqhEAAAAJ:qjMakFHDy7sC">benchmarking vision, language, & action models in procedurally generated, open ended action environments</a></li>
-                            <li><a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=vrtIqhEAAAAJ&citation_for_view=vrtIqhEAAAAJ:IjCSPb-OGe4C">KULCQ: an unsupervised keyword-based utterance level clustering quality metric</a></li>
-                            <li><a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=vrtIqhEAAAAJ&citation_for_view=vrtIqhEAAAAJ:2osOgNQ5qMEC">jill watson: a virtual teaching assistant powered by chatgpt</a></li>
-                            <li><a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=vrtIqhEAAAAJ&citation_for_view=vrtIqhEAAAAJ:d1gkVwhDpl0C">an end-to-end, interactive deep learning based annotation system for cursive and print english handwritten text</a></li>
-                        </ul>
-                    </article>
-                </main>
-            </div>
+        <section class="hero" aria-labelledby="hero-title">
+            <h1 id="hero-title">pranav<br>guruprasad</h1>
+            <p class="intro">researcher &amp; engineer building systems that can understand, act, and find their way through the world.</p>
         </section>
 
-        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+        <p class="nav-preview" aria-live="polite"></p>
 
-        <nav class="dock" aria-label="Dock">
-            <button class="dock-icon dock-image-icon" type="button" data-dock-label="Finder" data-dock-action="finder" aria-label="Finder">
-                <img src="assets/dock-icons/finder.png" alt="" draggable="false">
-            </button>
-            <button class="dock-icon dock-image-icon is-active" type="button" data-open-window="notes" data-dock-label="Notes" aria-label="Open Notes">
-                <img src="assets/dock-icons/notes.png" alt="" draggable="false">
-            </button>
-            <button class="dock-icon dock-image-icon" type="button" data-dock-label="Messages" data-dock-action="messages" aria-label="Messages">
-                <img src="assets/dock-icons/messages.png" alt="" draggable="false">
-            </button>
-            <button class="dock-icon dock-image-icon" type="button" data-dock-label="Photos" data-dock-action="photos" aria-label="Photos">
-                <img src="assets/dock-icons/photos.png" alt="" draggable="false">
-            </button>
-            <button class="dock-icon dock-image-icon" type="button" data-dock-label="Music" data-dock-action="music" aria-label="Music">
-                <img src="assets/dock-icons/music.png" alt="" draggable="false">
-            </button>
-            <button class="dock-icon calendar-icon" type="button" data-dock-label="Calendar" data-dock-action="calendar" aria-label="Calendar">
-                <span><b data-calendar-weekday>Thu</b><strong data-calendar-day>18</strong></span>
-            </button>
-            <button class="dock-icon dock-image-icon" type="button" data-dock-label="Terminal" data-dock-action="terminal" aria-label="Terminal">
-                <img src="assets/dock-icons/terminal.png" alt="" draggable="false">
-            </button>
-            <button class="dock-icon dock-image-icon" type="button" data-dock-label="System Settings" data-dock-action="settings" aria-label="System Settings">
-                <img src="assets/dock-icons/settings.png" alt="" draggable="false">
-            </button>
-            <span class="dock-separator" aria-hidden="true"></span>
-            <button class="dock-icon dock-image-icon" type="button" data-dock-label="Trash" data-dock-action="trash" aria-label="Trash">
-                <img src="assets/dock-icons/trash.png" alt="" draggable="false">
-            </button>
+        <nav class="tide-nav" aria-label="Explore Pranav's website">
+            <button type="button" data-panel="work" data-preview="Building AI systems that act over long horizons."><span>01</span> work</button>
+            <button type="button" data-panel="research" data-preview="Multimodal models, agents, and evaluation."><span>02</span> research</button>
+            <button type="button" data-panel="life" data-preview="Tennis, running, surfing, diving, and biking."><span>03</span> life</button>
+            <button type="button" data-panel="notes" data-preview="Interesting links, ideas, and corners of the internet."><span>04</span> notes</button>
         </nav>
 
-        <div class="desktop-popover" id="desktop-popover" hidden></div>
-        <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    </div>
+        <footer class="horizon">
+            <div>
+                <a href="https://x.com/pranavguru13" target="_blank" rel="noopener">x</a>
+                <a href="https://www.linkedin.com/in/pranav-guruprasad-82697514a" target="_blank" rel="noopener">linkedin</a>
+                <a href="https://github.com/pranavguru" target="_blank" rel="noopener">github</a>
+                <a href="mailto:pranavguruprasad0@gmail.com?subject=hello%20pranav">say hello ↗</a>
+            </div>
+        </footer>
 
-    <script src="js/script.js"></script>
+        <p class="keyboard-hint" role="status">1–4 sections · space pause · esc close</p>
+
+        <section class="panel" id="panel-work" role="dialog" aria-modal="true" aria-labelledby="work-title" hidden>
+            <button class="panel-close" type="button" data-close-panel aria-label="Close work">×</button>
+            <p class="panel-index">01 / work</p>
+            <h2 id="work-title">what I'm building.</h2>
+            <div class="panel-copy">
+                <p>I'm building foundation models and AI systems at <a href="https://fig.inc" target="_blank" rel="noopener">Fig</a> that can take actions over long horizons in the software world.</p>
+                <p>Previously, I worked across conversational AI, defense technology, and brain-machine interfaces. I like problems where intelligence has to leave the page and meet the messiness of reality.</p>
+            </div>
+            <a class="panel-link" href="mailto:pranavguruprasad0@gmail.com?subject=hello%20pranav">start a conversation ↗</a>
+        </section>
+
+        <section class="panel" id="panel-research" role="dialog" aria-modal="true" aria-labelledby="research-title" hidden>
+            <button class="panel-close" type="button" data-close-panel aria-label="Close research">×</button>
+            <p class="panel-index">02 / research</p>
+            <h2 id="research-title">research interests.</h2>
+            <ul class="current-list">
+                <li><span>01</span><div><strong>multimodal understanding</strong><p>How systems perceive the rich, imperfect, chaotic world they work in.</p></div></li>
+                <li><span>02</span><div><strong>agents that act</strong><p>Long-horizon workflows that require planning, adapting to asynchronous environments, and error recovery skills.</p></div></li>
+                <li><span>03</span><div><strong>evaluation</strong><p>Environments and benchmarks that measure progress towards the next generation of multimodal action models.</p></div></li>
+            </ul>
+            <a class="panel-link" href="publications.html">selected publications ↗</a>
+        </section>
+
+        <section class="panel" id="panel-life" role="dialog" aria-modal="true" aria-labelledby="life-title" hidden>
+            <button class="panel-close" type="button" data-close-panel aria-label="Close life">×</button>
+            <p class="panel-index">03 / side quests</p>
+            <h2 id="life-title">things I enjoy doing.</h2>
+            <ul class="current-list sidequest-list" aria-label="Things I enjoy doing">
+                <li><span>01</span><div><strong>surfing</strong></div></li>
+                <li><span>02</span><div><strong>scuba diving</strong></div></li>
+                <li><span>03</span><div><strong>tennis</strong><p>Chasing a 4.0 rating and a first tournament.</p></div></li>
+                <li><span>04</span><div><strong>running</strong><p>Training for a full marathon in 2026 (injured — this is getting pushed to 2027 😔)</p></div></li>
+                <li><span>05</span><div><strong>biking</strong></div></li>
+            </ul>
+            <p class="panel-signoff">Raised in Bangalore, spent a few incredible years in Goa and Atlanta, now in San Francisco.</p>
+        </section>
+
+        <section class="panel" id="panel-notes" role="dialog" aria-modal="true" aria-labelledby="notes-title" hidden>
+            <button class="panel-close" type="button" data-close-panel aria-label="Close notes">×</button>
+            <p class="panel-index">04 / scrapbook</p>
+            <h2 id="notes-title">things that fascinate me.</h2>
+            <p class="scrapbook-intro">A loose collection of links, ideas, and corners of the internet I keep revisiting.</p>
+            <div class="scrapbook-board" aria-label="Interesting links">
+                <a class="scrap-note" href="https://patrickcollison.com/fast" target="_blank" rel="noopener">
+                    <span class="scrap-meta">01</span>
+                    <strong>Fast</strong>
+                    <p>Examples of people quickly accomplishing ambitious things together.</p>
+                    <small>patrickcollison.com ↗</small>
+                </a>
+            </div>
+        </section>
+    </main>
+    <script src="js/script.js?v=20261008-1"></script>
 </body>
 </html>
